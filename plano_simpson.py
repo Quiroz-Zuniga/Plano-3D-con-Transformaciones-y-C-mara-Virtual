@@ -31,7 +31,7 @@ class Objeto3D:
         poly = Poly3DCollection(faces, facecolors=color, linewidths=0.2, edgecolors=edgecolor, alpha=alpha)
         self.ax.add_collection3d(poly)
 
-    def wall(self, p1, p2, height=3.0, thickness=0.1, color=(0.9,0.9,0.9), alpha=1.0):
+    def wall(self, p1, p2, height=3.0, thickness=1.1, color=(0.9,0.9,0.9), alpha=1):
         x1, y1 = p1
         x2, y2 = p2
         v = np.array([x2-x1, y2-y1])
@@ -71,7 +71,7 @@ class Objeto3D:
 def crear_plano(out_path="house_simpson.png"):
     fig = plt.figure(figsize=(12,8))
     ax = fig.add_subplot(111, projection='3d')
-    ax.set_box_aspect((1.5,1,0.6))
+    ax.set_box_aspect((2.5,3.5,0.6))
     obj = Objeto3D(ax)
 
     # Base
@@ -80,38 +80,44 @@ def crear_plano(out_path="house_simpson.png"):
     obj.floor(house_origin, house_size, color=(0.97,0.96,0.9))
 
     # Muros exteriores
-    walls = [((0,0),(16,0)),((16,0),(16,10)),((16,10),(0,10)),((0,10),(0,0))]
+    walls = [((7,0),(12,0)),((16,7),(16,10)),((16,10),(0,10)),((0,10),(0,0))]
     for w in walls:
-        obj.wall(w[0], w[1], height=3.0, thickness=0.15, color=(0.9,0.9,0.95))
+        obj.wall(w[0], w[1], height=6.0, thickness=0.15, color=(0.9,0.9,0.95))
 
     # Muros interiores aproximados
-    obj.wall((10,0),(10,4), height=3.0, thickness=0.15)
-    obj.wall((0,6),(6,6), height=3.0, thickness=0.15)
-    obj.wall((6,6),(6,10), height=3.0, thickness=0.15)
-    obj.wall((10,4),(16,4), height=3.0, thickness=0.15)
-    obj.wall((6,6),(10,6), height=3.0, thickness=0.12)
-    obj.wall((6,4),(10,4), height=3.0, thickness=0.12)
+    obj.wall((6,3),(0,3), height=6.0, thickness=0.15)
+    obj.wall((0,7),(6,7), height=6.0, thickness=0.15)
+    obj.wall((10,7),(16,7), height=6.0, thickness=0.15)
+    obj.wall((10,3),(14,3), height=6.0, thickness=0.15)
+    obj.wall((6,3),(10,3), height=6.0, thickness=0.12)
+    obj.wall((6,7),(10,7), height=6.0, thickness=0.12)
+    obj.wall((14,3),(14,7), height=6.0, thickness=0.12)
+    obj.wall((6,3),(6,7), height=6.0, thickness=0.12)
+    obj.wall((6,1.5),(6,3), height=6.0, thickness=0.12)
+    obj.wall((6,5),(14,5), height=6.0, thickness=0.12)
+    obj.wall((6,9),(6,10), height=6.0, thickness=0.12)
 
-    # Muebles (ejemplos)
-    obj.cuboid((11.0,0.6,0.0),(3.2,1.2,0.9), color=(0.8,0.4,0.4))  # sofa
-    obj.cuboid((13.0,2.0,0.0),(0.8,0.8,0.35), color=(0.6,0.4,0.2))  # mesa centro
-    obj.cuboid((10.2,0.2,0.0),(0.6,0.6,1.2), color=(0.2,0.2,0.25))  # mueble TV
 
-    # Cocina
-    obj.cuboid((0.2,6.2,0.0),(5.6,0.6,0.95), color=(0.8,0.8,0.8))
-    obj.cuboid((3.0,7.2,0.0),(1.4,1.0,0.75), color=(0.7,0.5,0.3))
-    obj.cuboid((5.0,9.0,0.0),(0.8,0.6,1.8), color=(0.9,0.9,0.95))
+    # # Muebles (ejemplos)
+    # obj.cuboid((11.0,0.6,0.0),(3.2,1.2,0.9), color=(0.8,0.4,0.4))  # sofa
+    # obj.cuboid((13.0,2.0,0.0),(0.8,0.8,0.35), color=(0.6,0.4,0.2))  # mesa centro
+    # obj.cuboid((10.2,0.2,0.0),(0.6,0.6,1.2), color=(0.2,0.2,0.25))  # mueble TV
 
-    # Dormitorios
-    obj.cuboid((11.2,4.4,0.0),(2.4,2.0,0.6), color=(0.4,0.6,0.8))
-    obj.cuboid((14.0,4.2,0.0),(1.2,1.0,1.6), color=(0.7,0.6,0.5))
-    obj.cuboid((11.2,7.0,0.0),(2.6,2.0,0.6), color=(0.4,0.6,0.6))
-    obj.cuboid((14.0,7.0,0.0),(1.0,1.2,0.8), color=(0.6,0.5,0.4))
+    # # Cocina
+    # obj.cuboid((0.2,6.2,0.0),(5.6,0.6,0.95), color=(0.8,0.8,0.8))
+    # obj.cuboid((3.0,7.2,0.0),(1.4,1.0,0.75), color=(0.7,0.5,0.3))
+    # obj.cuboid((5.0,9.0,0.0),(0.8,0.6,1.8), color=(0.9,0.9,0.95))
 
-    # Escaleras
-    obj.stairs((6.4,1.0,0.0), step_size=(0.8,0.35,0.18), steps=7, direction='forward', color=(0.55,0.4,0.3))
+    # # Dormitorios
+    # obj.cuboid((11.2,4.4,0.0),(2.4,2.0,0.6), color=(0.4,0.6,0.8))
+    # obj.cuboid((14.0,4.2,0.0),(1.2,1.0,1.6), color=(0.7,0.6,0.5))
+    # obj.cuboid((11.2,7.0,0.0),(2.6,2.0,0.6), color=(0.4,0.6,0.6))
+    # obj.cuboid((14.0,7.0,0.0),(1.0,1.2,0.8), color=(0.6,0.5,0.4))
 
-    # Techo indicativo
+    # # Escaleras
+    # obj.stairs((0,5,5.0), step_size=(1,5.10,0.18), steps=7, direction='forward', color=(0.55,0.4,0.3))
+
+    # # Techo indicativo
     # roof_verts = [
     #     [(0,0,3.0),(16,0,3.0),(12,5,4.0),(4,5,4.0)],
     #     [(4,5,4.0),(12,5,4.0),(16,10,3.0),(0,10,3.0)]
