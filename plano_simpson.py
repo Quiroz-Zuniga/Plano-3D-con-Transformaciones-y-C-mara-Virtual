@@ -61,7 +61,7 @@ class Objeto3D:
 
     def stairs(self, origin, step_size=(1.0,0.3,0.18), steps=6, direction='forward', color=(0.6,0.5,0.4)):
         x,y,z = origin
-        dx, dy, dz = step_size
+        dx, dy, dz = step_size 
         for i in range(steps):
             xi = x + i*dx if direction=='forward' else x
             yi = y + i*dy if direction=='side' else y + i*dy
@@ -86,7 +86,7 @@ def crear_plano(out_path="house_simpson.png"):
 
     # Muros interiores aproximados
     obj.wall((6,3),(0,3), height=6.0, thickness=0.15)
-    obj.wall((0,7),(6,7), height=6.0, thickness=0.15)
+    obj.wall((0,7),(6,7), height=6.0, thickness=0.15) 
     obj.wall((10,7),(16,7), height=6.0, thickness=0.15)
     obj.wall((10,3),(14,3), height=6.0, thickness=0.15)
     obj.wall((6,3),(10,3), height=6.0, thickness=0.12)
@@ -97,35 +97,10 @@ def crear_plano(out_path="house_simpson.png"):
     obj.wall((6,5),(14,5), height=6.0, thickness=0.12)
     obj.wall((6,9),(6,10), height=6.0, thickness=0.12)
 
+    # Escaleras integradas (ahora en el lado derecho)
+    obj.stairs(origin=(6,3.5,0.3), step_size=(1.0,0.3,0.18), steps=6, direction='forward', color=(0.55,0.4,0.3))
 
-    # # Muebles (ejemplos)
-    # obj.cuboid((11.0,0.6,0.0),(3.2,1.2,0.9), color=(0.8,0.4,0.4))  # sofa
-    # obj.cuboid((13.0,2.0,0.0),(0.8,0.8,0.35), color=(0.6,0.4,0.2))  # mesa centro
-    # obj.cuboid((10.2,0.2,0.0),(0.6,0.6,1.2), color=(0.2,0.2,0.25))  # mueble TV
-
-    # # Cocina
-    # obj.cuboid((0.2,6.2,0.0),(5.6,0.6,0.95), color=(0.8,0.8,0.8))
-    # obj.cuboid((3.0,7.2,0.0),(1.4,1.0,0.75), color=(0.7,0.5,0.3))
-    # obj.cuboid((5.0,9.0,0.0),(0.8,0.6,1.8), color=(0.9,0.9,0.95))
-
-    # # Dormitorios
-    # obj.cuboid((11.2,4.4,0.0),(2.4,2.0,0.6), color=(0.4,0.6,0.8))
-    # obj.cuboid((14.0,4.2,0.0),(1.2,1.0,1.6), color=(0.7,0.6,0.5))
-    # obj.cuboid((11.2,7.0,0.0),(2.6,2.0,0.6), color=(0.4,0.6,0.6))
-    # obj.cuboid((14.0,7.0,0.0),(1.0,1.2,0.8), color=(0.6,0.5,0.4))
-
-    # # Escaleras
-    # obj.stairs((0,5,5.0), step_size=(1,5.10,0.18), steps=7, direction='forward', color=(0.55,0.4,0.3))
-
-    # # Techo indicativo
-    # roof_verts = [
-    #     [(0,0,3.0),(16,0,3.0),(12,5,4.0),(4,5,4.0)],
-    #     [(4,5,4.0),(12,5,4.0),(16,10,3.0),(0,10,3.0)]
-    # ]
-    # roof = Poly3DCollection(roof_verts, facecolors=(0.7,0.2,0.2), alpha=0.5, edgecolors='k', linewidths=0.2)
-    # ax.add_collection3d(roof)
-
-    # Ajustes visuales
+    # Ajustes visuales + zoom
     ax.set_xlim(-1,17)
     ax.set_ylim(-1,11)
     ax.set_zlim(0,4.5)
@@ -133,6 +108,7 @@ def crear_plano(out_path="house_simpson.png"):
     ax.set_ylabel('y (m)')
     ax.set_zlabel('z (m)')
     ax.view_init(elev=25, azim=-45)
+    ax.dist = 5 # Zoom: más cerca para ver detalles internos/externos
     ax.grid(False)
     ax.set_xticks(np.arange(0,17,1))
     ax.set_yticks(np.arange(0,11,1))
