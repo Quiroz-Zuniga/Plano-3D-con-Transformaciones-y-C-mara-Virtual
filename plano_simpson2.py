@@ -62,8 +62,8 @@ class CasaSimpson3D:
 
     def paredes_exteriores(self):
         walls = [
-            ((0, 0), (16, 0)),
-            ((16, 0), (16, 10)),
+            ((7, 0), (12, 0)),
+            ((16, 7), (16, 10)),
             ((16, 10), (0, 10)),
             ((0, 10), (0, 0)),
         ]
@@ -76,16 +76,16 @@ class CasaSimpson3D:
             ((10,3),(14,3)), ((6,3),(10,3)), ((6,7),(10,7)),
             ((14,3),(14,7)), ((6,3),(6,7)),
             ((6,1.5),(6,3)), ((6,5),(14,5)), ((6,9),(6,10))
-        ]
+        ] 
         for p1, p2 in interiores:
             self.add(create_wall(p1, p2, height=6, thickness=0.12))
 
     def muebles(self):
         # Cama
-        self.add(create_box((1, 7, 0), (2, 1, 0.5), color=[0.6, 0.3, 0.6]))
+        self.add(create_box((12, 7, 0), (2, 1.2, 0.5), color=[0.6, 0.3, 0.6]))
 
         # Cocina
-        self.add(create_box((13, 7, 0), (2, 1.2, 1.0), color=[0.8, 0.1, 0.1]))
+        self.add(create_box((1, 7, 0), (2, 1, 0.5), color=[0.8, 0.1, 0.1]))
 
         # Mesa
         self.add(create_box((7, 6, 0), (1.5, 1.0, 0.75), color=[0.2, 0.2, 0.5]))
@@ -96,10 +96,22 @@ class CasaSimpson3D:
 
         # Alfombras
         self.add(create_box((14, 3.5, 0), (2.9, 1.2, 0.05), color=[0.0, 0.3, 0.0]))
-        self.add(create_box((3, 3, 0), (2.5, 1.5, 0.05), color=[1.0, 0.6, 0.8]))
 
         # Puerta
-        self.add(create_box((0, 4, 0), (0.9, 0.1, 2.1), color=[1.0, 0.7, 0.5]))
+        self.add(create_box((11, 3, 0), (0.9, 0.1, 2.1), color=[1.0, 0.7, 0.5]))
+
+        # Estufa gris oscuro en la cocina
+        self.add(create_box((0, 5, 0), (0.8, 0.8, 0.6), color=[0.3, 0.3, 0.3]))
+
+        # Escalera
+        for i in range(6):
+            self.add(create_box((6, 3.5 + i*0.3, 0), (1, 0.1, 0.3), color=[0.5, 0.25, 0.0]))  # escalones de la escalera
+
+        # Mueble pequeño (silla) - color rosado-violeta
+        self.add(create_box((12, 2, 0), (0.6, 0.6, 0.9), color=[0.8, 0.4, 0.8]))  # Silla pequeña en rosado-violeta
+
+        # Mueble grande (armario) - color amarillo fuerte
+        self.add(create_box((8, 2, 0), (2, 1, 2.5), color=[1.0, 1.0, 0.0]))  # Armario grande en amarillo fuerte
 
     def render(self):
         scene = o3d.visualization.Visualizer()
