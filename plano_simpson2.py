@@ -112,6 +112,89 @@ class CasaSimpson3D:
 
         # Mueble grande (armario) - color amarillo fuerte
         self.add(create_box((8, 2, 0), (2, 1, 2.5), color=[1.0, 1.0, 0.0]))  # Armario grande en amarillo fuerte
+        
+        
+            # ---------------------------------------------------------
+    # PUERTA EXTERIOR (curva con borde y pomo)
+    # ---------------------------------------------------------
+    def puerta_exterior(self, x=0, y=0, z=0):
+        """
+        Puerta exterior 
+        Cambia x,y,z para mover la puerta.
+        """
+
+        # ------------ cuerpo de la puerta ------------
+        puerta = create_box(
+            origin=(x, y, z),
+            size=(0.12, 1.0, 2.1),
+            color=[0.88, 0.40, 0.25]   # naranja rojizo
+        )
+        self.add(puerta)
+
+        # ------------ marco de madera ------------
+        marco = create_box(
+            origin=(x - 0.05, y - 0.05, z - 0.05),
+            size=(0.20, 1.10, 2.25),
+            color=[0.35, 0.18, 0.04]
+        )
+        self.add(marco)
+
+        # ------------ pomo superior ------------
+        pomo1 = create_box(
+            origin=(x + 0.15, y + 0.60, z + 1.20),
+            size=(0.08, 0.08, 0.08),
+            color=[0.75, 0.75, 1.0]
+        )
+        self.add(pomo1)
+
+        # ------------ pomo inferior ------------
+        pomo2 = create_box(
+            origin=(x + 0.15, y + 0.60, z + 0.80),
+            size=(0.08, 0.08, 0.08),
+            color=[0.75, 0.75, 1.0]
+        )
+        self.add(pomo2)
+        
+            # ---------------------------------------------------------
+    # PUERTA INTERIOR ARCO (con banda verde/naranja)
+    # ---------------------------------------------------------
+    def puerta_interior_arco(self, x=0, y=0, z=0):
+        """
+        Puerta interior con arco y banda decorada — estilo imagen 2.
+        Cambia x,y,z para moverla.
+        """
+
+        # --- pared donde va el arco ---
+        arco = create_box(
+            origin=(x, y, z),
+            size=(0.12, 1.0, 2.0),
+            color=[0.90, 0.60, 0.65]  # rosado interior clásico
+        )
+        self.add(arco)
+
+        # --- arco superior (semi-curvo simulado) ---
+        arco_superior = create_box(
+            origin=(x - 0.02, y, z + 1.7),
+            size=(0.16, 1.0, 0.35),
+            color=[0.80, 0.45, 0.50]
+        )
+        self.add(arco_superior)
+
+        # --- banda decorada verde ---
+        banda1 = create_box(
+            origin=(x + 0.01, y + 0.10, z + 0.80),
+            size=(0.06, 0.80, 0.25),
+            color=[0.0, 0.75, 0.0]
+        )
+        self.add(banda1)
+
+        # --- banda decorada naranja ---
+        banda2 = create_box(
+            origin=(x + 0.01, y + 0.10, z + 0.55),
+            size=(0.06, 0.80, 0.25),
+            color=[0.90, 0.55, 0.15]
+        )
+        self.add(banda2)
     
         #______________Garaje_______________________
     def garaje(self):
@@ -212,5 +295,10 @@ if __name__ == "__main__":
     casa.paredes_interiores()
     casa.muebles()
     casa.garaje()
+    # Puerta exterior (solo cambia x,y,z para colocarla)
+    casa.puerta_exterior(x=13.9, y=3.5, z=0)
+    casa.puerta_exterior(x=0.05, y=1.5, z=0)
+    # Puerta interior arco
+    casa.puerta_interior_arco(x=6, y=7.2, z=4)
     casa.render()
 
