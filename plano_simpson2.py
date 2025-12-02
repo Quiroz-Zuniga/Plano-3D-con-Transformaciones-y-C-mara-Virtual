@@ -1,7 +1,7 @@
 # plano_simpson_open3d.py
 # Plano 3D estilo Google Earth de la casa de los Simpson
 # Librerías: Open3D (pip install open3d)
-# Autor: ChatGPT (versión mejorada desde tu código)
+# Autor: Ruben Quiroz and Jennifer Gigccella
 
 import open3d as o3d
 import numpy as np
@@ -20,7 +20,7 @@ def create_box(origin, size, color=[0.8, 0.8, 0.8]):
     box.compute_vertex_normals()
     return box
 
-
+# Creación de paredes
 def create_wall(p1, p2, height=3, thickness=0.15, color=[0.72, 0.52, 0.36]):
     x1, y1 = p1
     x2, y2 = p2
@@ -68,7 +68,7 @@ class CasaSimpson3D:
             ((0, 10), (0, 0)),
         ]
         for p1, p2 in walls:
-            self.add(create_wall(p1, p2, height=6))
+            self.add(create_wall(p1, p2, height=3))
 
     def paredes_interiores(self):
         interiores = [
@@ -78,7 +78,7 @@ class CasaSimpson3D:
             ((6,1.5),(6,3)), ((6,5),(14,5)), ((6,9),(6,10))
         ] 
         for p1, p2 in interiores:
-            self.add(create_wall(p1, p2, height=6, thickness=0.12))
+            self.add(create_wall(p1, p2, height=3, thickness=0.12))
 
     def muebles(self):
         # Cama
@@ -112,7 +112,73 @@ class CasaSimpson3D:
 
         # Mueble grande (armario) - color amarillo fuerte
         self.add(create_box((8, 2, 0), (2, 1, 2.5), color=[1.0, 1.0, 0.0]))  # Armario grande en amarillo fuerte
+    
+        #______________Garaje_______________________
+    def garaje(self):
+        # --- Coordenadas base EXACTAS en la pared ((16,7),(16,10)) ---
+        base_x = 16        # pared frontal
+        base_y = 7.278         # inicio de la pared
+        ancho = 2.5         # horizontal (en eje Y)
+        largo = 2.5          # sale hacia afuera en +X
+        altura = 1.5
 
+        # --- Portón del garaje ---
+        porton = create_box(
+            origin=(base_x, base_y, 0),
+            size=(0.05, ancho, 2.0),   
+            color=[0.75, 0.55, 0.30]
+        )
+        self.add(porton)
+
+        # --- Paneles horizontales del portón ---
+        for i in range(1, 3):
+            linea = create_box(
+                origin=(base_x + 0.01, base_y, 0.1 + i * 0.6),
+                size=(0.06, ancho, 0.05),
+                color=[0.55, 0.35, 0.20]
+            )
+            self.add(linea)
+
+        # --- Ventana superior centrada sobre el portón ---
+        ventana = create_box(
+            origin=(base_x + 0, base_y + ancho/2 - 0.25, 2.1),
+            size=(0.05, 0.5, 0.5),
+            color=[0.65, 0.85, 1.0]
+        )
+        self.add(ventana)
+
+        # --- Techo a dos aguas ---
+        # --- Techo a dos aguas corregido ---
+        cumbrera_z = altura + 0.1     # altura de la línea del techo
+        mitad = ancho / 2             # mitad del ancho total
+
+        # --- Panel izquierdo ---
+        techo_izq = create_box(
+            origin=(base_x, base_y, altura),
+            size=(mitad, largo, 0.1),
+            color=[0.35, 0.20, 0.05]
+        )
+        # rotación desde la cumbrera (borde superior del panel)
+        techo_izq.rotate(
+            techo_izq.get_rotation_matrix_from_xyz((0.45, 0, 0)),
+            center=(base_x + mitad, base_y, cumbrera_z)
+        )
+        self.add(techo_izq)
+
+        # --- Panel derecho ---
+        techo_der = create_box(
+            origin=(base_x + mitad, base_y, altura),
+            size=(mitad, largo, 0.1),
+            color=[0.30, 0.17, 0.04]
+        )
+        # rotación desde la cumbrera (borde superior del panel)
+        techo_der.rotate(
+            techo_der.get_rotation_matrix_from_xyz((-0.45, 0, 0)),
+            center=(base_x + mitad, base_y, cumbrera_z)
+        )
+        self.add(techo_der)
+
+#___________Fin Garaje____________________
     def render(self):
         scene = o3d.visualization.Visualizer()
         scene.create_window(width=1280, height=900)
@@ -134,8 +200,7 @@ class CasaSimpson3D:
 
         scene.run()
         scene.destroy_window()
-
-
+        
 # ---------------------------------------------------------
 # Ejecutar plano
 # ---------------------------------------------------------
@@ -146,5 +211,6 @@ if __name__ == "__main__":
     casa.paredes_exteriores()
     casa.paredes_interiores()
     casa.muebles()
-
+    casa.garaje()
     casa.render()
+
