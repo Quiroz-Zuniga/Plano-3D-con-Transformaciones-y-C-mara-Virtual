@@ -98,14 +98,14 @@ class CasaSimpson3D:
         self.add(create_box((14, 3.5, 0), (2.9, 1.2, 0.05), color=[0.0, 0.3, 0.0]))
 
         # Puerta
-        self.add(create_box((11, 3, 0), (0.9, 0.1, 2.1), color=[1.0, 0.7, 0.5]))
+        self.add(create_box((11, 3, 0), (0.9, 0.1, 2.1), color=[1.0, 1.0, 1.0])) 
 
         # Estufa gris oscuro en la cocina
         self.add(create_box((0, 5, 0), (0.8, 0.8, 0.6), color=[0.3, 0.3, 0.3]))
 
         # Escalera
         for i in range(6):
-            self.add(create_box((6, 3.5 + i*0.3, 0), (1, 0.1, 0.3), color=[0.5, 0.25, 0.0]))  # escalones de la escalera
+            self.add(create_box((6,3.5 + i*0.3, 0), (1, 0.1, 0.3), color=[0.5, 0.25, 0.0]))  # escalones de la escalera
 
         # Mueble pequeño (silla) - color rosado-violeta
         self.add(create_box((12, 2, 0), (0.6, 0.6, 0.9), color=[0.8, 0.4, 0.8]))  # Silla pequeña en rosado-violeta
