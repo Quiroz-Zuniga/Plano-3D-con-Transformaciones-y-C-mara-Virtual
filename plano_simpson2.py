@@ -242,8 +242,8 @@ class CasaSimpson3D:
 
         # --- Panel izquierdo ---
         techo_izq = create_box(
-            origin=(base_x, base_y, altura),
-            size=(mitad, largo, 0.1),
+            origin=(base_x - 0.5 , base_y - 0.30 , altura + 1.5),
+            size=(mitad , largo - 0.3, 0.1),
             color=[0.35, 0.20, 0.05]
         )
         # rotación desde la cumbrera (borde superior del panel)
@@ -255,8 +255,8 @@ class CasaSimpson3D:
 
         # --- Panel derecho ---
         techo_der = create_box(
-            origin=(base_x + mitad, base_y, altura),
-            size=(mitad, largo, 0.1),
+            origin=(base_x -0.5, base_y + 0.20  , altura + 2.5),
+            size=(mitad, largo - 0.3, 0.1),
             color=[0.30, 0.17, 0.04]
         )
         # rotación desde la cumbrera (borde superior del panel)
@@ -265,6 +265,27 @@ class CasaSimpson3D:
             center=(base_x + mitad, base_y, cumbrera_z)
         )
         self.add(techo_der) 
+            # --- Relleno entre los dos techos ---
+        # PUNTO: Centro entre los dos tejados
+        pivote_x = base_x + ancho / 2
+        pivote_y = base_y + largo / 2
+        pivote_z = altura + 0.01   # pequeña el     evación para evitar clipping
+
+        relleno = create_box(
+            origin=(pivote_x, pivote_y, pivote_z),
+            size=(ancho, 0.05, 1.5),     # AJUSTABLE
+            color=[0.20, 0.12, 0.04]
+        )
+
+        # --- Rotación del relleno ---
+        # Girar para que coincida con la inclinación del techo
+        relleno.rotate(
+            relleno.get_rotation_matrix_from_xyz((0, np.radians(-25), 0)),
+            center=(pivote_x, pivote_y, pivote_z)
+        )
+
+        self.add(relleno)
+
 
 #___________Fin Garaje____________________
     def render(self):
