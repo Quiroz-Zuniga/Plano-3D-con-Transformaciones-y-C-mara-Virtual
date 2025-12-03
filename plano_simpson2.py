@@ -111,7 +111,7 @@ class CasaSimpson3D:
         self.add(create_box((12, 2, 0), (0.6, 0.6, 0.9), color=[0.8, 0.4, 0.8]))  # Silla pequeña en rosado-violeta
 
         # Mueble grande (armario) - color amarillo fuerte
-        self.add(create_box((8, 2, 0), (2, 1, 2.5), color=[1.0, 1.0, 0.0]))  # Armario grande en amarillo fuerte
+        self.add(create_box((8, 2, -0), (2, 1, 2.5), color=[1.0, 1.0, 0.0]))  # Armario grande en amarillo fuerte
         
         
             # ---------------------------------------------------------
@@ -176,7 +176,7 @@ class CasaSimpson3D:
         arco_superior = create_box(
             origin=(x - 0.02, y, z + 1.7),
             size=(0.16, 1.0, 0.35),
-            color=[0.80, 0.45, 0.50]
+            color=[0.80, 0.45, 0.50]  # rosado más oscuro
         )
         self.add(arco_superior)
 
@@ -195,6 +195,11 @@ class CasaSimpson3D:
             color=[0.90, 0.55, 0.15]
         )
         self.add(banda2)
+
+        # Simulación de transparencia (colores suaves para "transparente")
+        arco.paint_uniform_color([0.9, 0.9, 0.9])  # Color muy claro para simular transparencia
+        arco_superior.paint_uniform_color([0.8, 0.8, 0.8])  # Color suave para simular opacidad
+
     
         #______________Garaje_______________________
     def garaje(self):
@@ -232,7 +237,7 @@ class CasaSimpson3D:
 
         # --- Techo a dos aguas ---
         # --- Techo a dos aguas corregido ---
-        cumbrera_z = altura + 0.1     # altura de la línea del techo
+        cumbrera_z = altura + 0.3    # altura de la línea del techo
         mitad = ancho / 2             # mitad del ancho total
 
         # --- Panel izquierdo ---
@@ -259,7 +264,7 @@ class CasaSimpson3D:
             techo_der.get_rotation_matrix_from_xyz((-0.45, 0, 0)),
             center=(base_x + mitad, base_y, cumbrera_z)
         )
-        self.add(techo_der)
+        self.add(techo_der) 
 
 #___________Fin Garaje____________________
     def render(self):
@@ -299,6 +304,7 @@ if __name__ == "__main__":
     casa.puerta_exterior(x=13.9, y=3.5, z=0)
     casa.puerta_exterior(x=0.05, y=1.5, z=0)
     # Puerta interior arco
-    casa.puerta_interior_arco(x=6, y=7.2, z=4)
-    casa.render()
+    casa.puerta_interior_arco(x=6, y=9, z=0)
+    casa.puerta_interior_arco(x=6, y=6, z=0) 
+    casa.render() 
 
