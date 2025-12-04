@@ -1,7 +1,7 @@
 # plano_simpson_open3d.py
 # Plano 3D estilo Google Earth de la casa de los Simpson
 # Librerías: Open3D (pip install open3d)
-# Autor: Ruben Quiroz and Jennifer Gigccella
+# Autor: Ruben Quiroz and Jennifer Gomez
 
 import open3d as o3d
 import numpy as np
@@ -255,6 +255,8 @@ class CasaSimpson3D:
         )
         self.add(ventana)
 
+       
+       
         # --- Techo a dos aguas ---
         # --- Techo a dos aguas corregido ---
         cumbrera_z = altura + 0.3    # altura de la línea del techo
@@ -284,28 +286,7 @@ class CasaSimpson3D:
             techo_der.get_rotation_matrix_from_xyz((-0.45, 0, 0)),
             center=(base_x + mitad, base_y, cumbrera_z)
         )
-        self.add(techo_der) 
-            # --- Relleno entre los dos techos ---
-        # PUNTO: Centro entre los dos tejados
-        pivote_x = base_x + ancho / 2
-        pivote_y = base_y + largo / 2
-        pivote_z = altura + 0.01   # pequeña el     evación para evitar clipping
-
-        relleno = create_box(
-            origin=(pivote_x, pivote_y, pivote_z),
-            size=(ancho, 0.05, 1.5),     # AJUSTABLE
-            color=[0.20, 0.12, 0.04]
-        )
-
-        # --- Rotación del relleno ---
-        # Girar para que coincida con la inclinación del techo
-        relleno.rotate(
-            relleno.get_rotation_matrix_from_xyz((0, np.radians(-25), 0)),
-            center=(pivote_x, pivote_y, pivote_z)
-        )
-
-        self.add(relleno)
-
+        self.add(techo_der)
 
 #___________Fin Garaje____________________
     def render(self):
