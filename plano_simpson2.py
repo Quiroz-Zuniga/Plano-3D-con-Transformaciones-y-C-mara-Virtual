@@ -84,14 +84,14 @@ class CasaSimpson3D:
         # Cama
         self.add(create_box((12, 7, 0), (2, 1.2, 0.5), color=[0.6, 0.3, 0.6]))
 
-        # Cocina
-        self.add(create_box((1, 7, 0), (2, 1, 0.5), color=[0.8, 0.1, 0.1]))
+        # Mueble verde pequeño
+        self.add(create_box((1, 7, 0), (1.0, 0.6, 0.8), color=[0.0, 0.6, 0.0]))
 
         # Mesa
         self.add(create_box((7, 6, 0), (1.5, 1.0, 0.75), color=[0.2, 0.2, 0.5]))
 
         # Lámparas
-        self.add(create_box((8, 4, 0), (0.3, 0.3, 1.0), color=[1, 1, 0.5]))
+        self.add(create_box((8, 3, 0), (0.3, 0.3, 1.0), color=[1, 1, 0.5]))
         self.add(create_box((3, 8, 0), (0.3, 0.3, 1.0), color=[1, 1, 0.5]))
 
         # Alfombras
@@ -103,18 +103,38 @@ class CasaSimpson3D:
         # Estufa gris oscuro en la cocina
         self.add(create_box((0, 5, 0), (0.8, 0.8, 0.6), color=[0.3, 0.3, 0.3]))
 
-        # Escalera
-        for i in range(6):
-            self.add(create_box((6,3.5 + i*0.3, 0), (1, 0.1, 0.3), color=[0.5, 0.25, 0.0]))  # escalones de la escalera
 
-        # Mueble pequeño (silla) - color rosado-violeta
+        # Escalera estilo imagen (peldaños púrpura + baranda marrón)
+        for i in range(6):
+         x = 8.5 - i * 0.5  # derecha a izquierda
+         y = 4
+         z = i * 0.2
+         self.add(create_box((x, y, z), (0.4, 1.0, 0.5), color=[0.5, 0.2, 0.6]))  # peldaños púrpura
+
+        # Baranda vertical (postes marrones)
+        for i in range(6):
+         x = 8.5 - i * 0.5
+         y = 4
+         z = i * 0.2 + 0.2
+         self.add(create_box((x, y, z), (0.05, 0.05, 0.8), color=[0.4, 0.2, 0.0]))  # postes marrones
+
+        # Barra superior horizontal (sin rotación)
+        # Alineada con los postes, centrada en y=5
+        self.add(create_box((6, 4, 0.9), (2.5, 0.05, 0.05), color=[0.4, 0.2, 0.0]))  # barra superior fija
+
+     # Mueble pequeño (silla) - color rosado-violeta
         self.add(create_box((12, 2, 0), (0.6, 0.6, 0.9), color=[0.8, 0.4, 0.8]))  # Silla pequeña en rosado-violeta
 
         # Mueble grande (armario) - color amarillo fuerte
         self.add(create_box((8, 2, -0), (2, 1, 2.5), color=[1.0, 1.0, 0.0]))  # Armario grande en amarillo fuerte
         
-        
-            # ---------------------------------------------------------
+            # Refrigeradora mediana
+        self.add(create_box((0.9, 6, 0), (0.7, 0.7, 1.8), color=[0.7, 0.7, 0.7]))  # Refri gris claro
+
+        # Televisor negro frente a la mesa
+        self.add(create_box((0, 8.5, 0.5), (1.2, 0.1, 0.8), color=[0.0, 0.0, 0.0]))  # Televisor negro
+
+    # ---------------------------------------------------------
     # PUERTA EXTERIOR (curva con borde y pomo)
     # ---------------------------------------------------------
     def puerta_exterior(self, x=0, y=0, z=0):
@@ -326,6 +346,6 @@ if __name__ == "__main__":
     casa.puerta_exterior(x=0.05, y=1.5, z=0)
     # Puerta interior arco
     casa.puerta_interior_arco(x=6, y=9, z=0)
-    casa.puerta_interior_arco(x=6, y=6, z=0) 
+    casa.puerta_interior_arco(x=6, y=6, z=0)  
     casa.render() 
 
